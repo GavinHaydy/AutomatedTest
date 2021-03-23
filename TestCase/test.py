@@ -2,6 +2,7 @@ import unittest
 from time import sleep
 from selenium import webdriver
 from Page.Home.baidu import BaiduPage
+from Page.Home.elementui import Element
 
 
 class TestBaidu(unittest.TestCase):
@@ -16,6 +17,12 @@ class TestBaidu(unittest.TestCase):
         page.search_button()
         sleep(2)
         self.assertEqual(page.get_title(), "selenium_百度搜索")
+
+    def test_elem_case(self):
+        page = Element(self.driver)
+        page.open()
+        page.divider()
+        sleep(2)
 
     def tearDown(self):
         self.driver.quit()
