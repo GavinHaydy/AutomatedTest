@@ -16,13 +16,14 @@ report_path = os.path.join(current_path, 'Report')  # 结果报告存放路径
     return discover
 """
 """
-加载用例的方式二： 放在with open 上方
-testsuite = unittest.Testsuite()
-testsuite.addTest(unittest.TestLoader.loadTestFromTestCase(用例类名))
+    加载用例的方式二： 放在with open 上方
+    testsuite = unittest.Testsuite()
+    testsuite.addTest(unittest.TestLoader.loadTestFromTestCase(用例类名))
 """
 """
-加载方式三： 此脚本使用此方式
-
+    加载方式三：
+    testsuite = unittest.Testsuite()
+    testsuite.addTest(类名('函数名'))
 """
 
 if __name__ == '__main__':
