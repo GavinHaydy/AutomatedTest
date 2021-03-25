@@ -3,7 +3,7 @@ from HTMLTestRunner.HTMLTestRunner import HTMLTestRunner
 import os
 from TestCase.test import TestBaidu
 import time
-now = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+now = time.strftime('%Y-%m-%d %H-%M-%S', time.localtime(time.time()))
 current_path = os.getcwd()  # 获取当前路径
 case_path = os.path.join(current_path, 'TestCate')  # 用例路径 可以多个
 report_path = os.path.join(current_path, 'Report')  # 结果报告存放路径
@@ -27,7 +27,7 @@ report_path = os.path.join(current_path, 'Report')  # 结果报告存放路径
 """
 
 if __name__ == '__main__':
-    report_title = 'Example用例执行报告.html'
+    report_title = (str(now) + '用例执行报告.html')
     result_path = os.path.join(report_path, report_title)
 
     # 报告描述
