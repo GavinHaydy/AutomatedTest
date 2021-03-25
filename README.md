@@ -1,16 +1,24 @@
-# AutomatedTest
+# <font color=#00ffff>AutomatedTest</font>
     简单的PO模式UI自动化测试脚本模板
-    ddt模式后续会慢慢完善
 
-##使用说明:
+##<font color=#FF0000>2021-3-25 17:30:30 已增加ddt模式模板,相关代码如下:</font>
+    DataProcessing => bugLogin.py 
+    Page => Home => bugpz
+    TestCase => login &  test_login_case
+    
+#<font color=#00ffff>使用说明:</font>
     需要的三方库在requirements.txt,安装方法如下:
     pip install -r requirements.txt
 
 
-目录结构说明
+#<font color=#00ffff>目录结构说明</font>
 ```
 Business 
     放置封装文件，目前封装了查找元素的几种方法
+Config
+    放数据文件的地方 比如ini excel等
+DataProcessing
+    数据文件的数据处理程序
 Page
     页面的查找元素文件
 Report
@@ -19,9 +27,11 @@ TestCase
     完整的用例执行逻辑脚本
 run.py
     用例执行入口
+requirements.txt
+    依赖库列表
 ```
 
-Jenkins 部署 以windows举例
+#<font color=#00ffff>Jenkins 部署 以windows举例</font>
 ```
     1.进入官网下载jenkins.war
     2.切换到下载目录并执行 java -jar jenkins.war --httpPort=XXXX  XXXX：自己指定端口号
