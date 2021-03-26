@@ -24,7 +24,12 @@ class ExcelUtil:
 
                 values_row = self.table.row_values(x)
                 for j in range(self.cols):
-                    json[self.keys[j]] = str(int(values_row[j]))  # 账号密码都是纯数字，上面那步会自动改为float,所以这里做数据类型转换处理
+                    if type(values_row[j]) is float:
+                        json[self.keys[j]] = str(int(values_row[j]))  # 账号密码都是纯数字，上面那步会自动改为float,所以这里做数据类型转换处理
+                    elif type(values_row[j]) is int:
+                        json[self.keys[j]] = str(values_row[j])
+                    else:
+                        json[self.keys[j]] = values_row[j]
                 disc_excel.append(json)
                 x += 1
             return disc_excel
