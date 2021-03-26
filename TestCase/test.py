@@ -35,7 +35,6 @@ class TestBaidu(unittest.TestCase):
     def login(self, username, password):
         page = BugPZ(self.driver)
         page.open()
-        sleep(10)
         page.username(username)
         page.password(password)
         page.login_btn()
