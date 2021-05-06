@@ -19,6 +19,8 @@ Config
     放数据文件的地方 比如ini excel等
 DataProcessing
     数据文件的数据处理程序
+Explains
+    各种说明文档
 Page
     页面的查找元素文件
 Report
