@@ -6,13 +6,15 @@ from Page.Home.elementui import Element
 from Page.Home.bugpz import BugPZ
 from DataProcessing import bugLOGIN
 from ddt import ddt, data
+from unittest import skip
 
 
 @ddt
 class TestBaidu(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        # self.driver = webdriver.Chrome()
+        self.driver = webdriver.PhantomJS()     # 无界面浏览器  官网 phantomjs.org
 
     def test_baidu_search_case(self):
         page = BaiduPage(self.driver)
@@ -22,6 +24,7 @@ class TestBaidu(unittest.TestCase):
         sleep(2)
         self.assertEqual(page.get_title(), "selenium_百度搜索")
 
+    @skip
     def test_elem_case(self):
         page = Element(self.driver)
         page.open()
@@ -39,6 +42,7 @@ class TestBaidu(unittest.TestCase):
         page.password(password)
         page.login_btn()
 
+    @skip
     @data(*datadict)
     def test_login_case(self, test):
         self.login(test['username'], test['password'])
