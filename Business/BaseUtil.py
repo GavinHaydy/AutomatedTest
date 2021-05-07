@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class BasePage(object):
@@ -44,3 +45,19 @@ class BasePage(object):
 
     def get_text(self, xpath):
         return self.by_xpath(xpath).text
+
+    def size(self, wide, high): # 设置浏览器大小
+        return self.driver.set_window_size(wide, high)
+
+    '''鼠标事件相关封装'''
+    def right_click(self, path):    # 鼠标右击
+        return ActionChains(self.driver).context_click(path).perform()
+
+    def double_click(self, path):   # 双击
+        return ActionChains(self.driver).double_click(path).perform()
+
+    def drag_and_drop(self, start_path, end_path):    # 鼠标拖放（start_path=鼠标拖动源元素， end_path=鼠标释放目标元素）
+        return ActionChains(self.driver).drag_and_drop(start_path, end_path).perform()
+
+    def move_to_element(self, path):    # 鼠标悬停
+        return ActionChains(self.driver).move_to_element(path).perform()
