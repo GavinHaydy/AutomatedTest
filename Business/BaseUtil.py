@@ -61,3 +61,10 @@ class BasePage(object):
 
     def move_to_element(self, path):    # 鼠标悬停
         return ActionChains(self.driver).move_to_element(path).perform()
+
+    '''其他操作封装'''
+    def get_picture(self, file_save_path):  # 截图并保存在指定位置
+        return self.driver.get_screenshot_as_file(file_save_path)
+
+    def use_js(self, js_code):
+        return self.driver.execute_script(js_code)
