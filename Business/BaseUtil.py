@@ -16,8 +16,8 @@ class BasePage(object):
         else:
             self.driver.get(url)
 
-    def by_id(self, id):
-        return self.driver.find_element_by_id(id)
+    def by_id(self, id_):
+        return self.driver.find_element_by_id(id_)
 
     def by_name(self, name):
         return self.driver.find_element_by_name(name)
@@ -66,5 +66,18 @@ class BasePage(object):
     def get_picture(self, file_save_path):  # 截图并保存在指定位置
         return self.driver.get_screenshot_as_file(file_save_path)
 
-    def use_js(self, js_code):
+    def use_js(self, js_code):  # 运营js代码
         return self.driver.execute_script(js_code)
+
+    def get_url(self):  # 获取当前url
+        return self.current_url()
+
+    def get_source(self):   # 获取当前页源
+        return self.page_source()
+
+    def max_window(self):   # 最大化浏览器
+        return self.maximizi_window()
+
+    def wait(self, second):     # 隐式等待
+        return self.implicitly_wait(second)
+
