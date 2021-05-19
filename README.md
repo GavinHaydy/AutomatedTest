@@ -13,24 +13,35 @@
 
 # <font color=#00ffff>目录结构说明</font>
 ```
-Business 
-    放置封装文件，目前封装了查找元素的几种方法
-Config
-    放数据文件的地方 比如ini excel等
-DataProcessing
-    数据文件的数据处理程序
-Explains
-    各种说明文档
-Page
-    页面的查找元素文件
-Report
-    用于存放用例执行报告，在run.py中可自行修改
-TestCase
-    完整的用例执行逻辑脚本
-run.py
-    用例执行入口
-requirements.txt
-    依赖库列表
+│──phantomjs.exe    # 无头浏览器
+│──README.md
+│──requirements.txt # 依赖库列表
+│──run.py   # 执行文件
+│
+├─Business  # 放置封装文件，目前封装了查找元素的几种方法
+│  └─BaseUtil.py   # 封装文件
+│
+├─Config    # 放数据文件的地方 比如ini excel等
+│      bugpz-login.xlsx
+│
+├─DataProcessing    # 数据文件的数据处理程序
+│  └─ bugLOGIN.py
+│
+├─Explains  # 各种说明文档
+│      Assertion.py # 常用的断言例子
+│
+├─Page  # 页面的查找元素文件
+│  └─Home
+│     │  baidu.py
+│     │  bugpz.py
+│     └─ elementui.py
+│
+├─Report    # 用于存放用例执行报告，在run.py中可自行修改
+│      存放用例报告的地方
+│
+├─Static
+└─TestCase  # 完整的用例执行逻辑脚本
+    └─ test.py
 ```
 
 # <font color=#00ffff>Jenkins 部署 以windows举例</font>
@@ -45,12 +56,20 @@ requirements.txt
     4.构建触发器根据实际情况选择，如果想手动执行可以不选，如果想定时就选择“定期建立”（Build periodically）
 定时语法参考： https://blog.csdn.net/u013250071/article/details/81000777
     5.构建环境根据实际情况自己决定
-    6.增加构建步骤：选择“执行windows批处理命令”（Execute Windows batch command），在文本域里输入命令
+    6.1
+    Windows系统:
+    增加构建步骤：选择“执行windows批处理命令”（Execute Windows batch command），在文本域里输入命令
 举个栗子：
     我的执行文件目录run.py在G:\data\wwwroot\AutomatedTest  那么命令为：
     G:
     cd data/wwwroot/AutomatedTest
     python run.py
+    6.2
+    linux系统:
+举个栗子：
+    我的执行文件目录run.py在/data/wwwoot/AutomatedTest  那么命令为：
+    cd /data/wwwroot/AutomatedTest
+    python3 run.py  因为linux自带python2
     7.建立后操作自行选择，点击保存    
     8.保存后会返回你新建的任务页，点击左边操作界面的“构建”（Build Now）就开始执行任务了
 ```
