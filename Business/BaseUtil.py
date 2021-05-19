@@ -12,7 +12,7 @@ class BasePage(object):
 
     def open(self, url=None):
         if url is None:
-            print('请设置url')
+            self.driver.get(self.url)
         else:
             self.driver.get(url)
 
