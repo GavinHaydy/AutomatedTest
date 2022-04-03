@@ -1,8 +1,8 @@
-from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-class BasePage(object):
+class BasePage(WebDriver):
     """
        基础Page层，封装一些常用方法
     """
