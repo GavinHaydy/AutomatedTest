@@ -1,5 +1,2 @@
 ddt==1.4.2
-selenium==3.141.0
-HTMLTestRunner-Python3==0.8.0
-xlrd==1.2.0
-requests~=2.27.0
+selenium==4.3.0
