@@ -1,4 +1,4 @@
-from Business.BaseUtil import BasePage
+from Common.BaseUtil import BasePage
 
 
 class BugPZ(BasePage):

@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-def open_browser(browser: str='chrome', **kwargs):
+def open_browser(browser: str = 'chrome', **kwargs):
     """
 
     Args:
@@ -37,7 +37,7 @@ class BasePage(object):
     def __init__(self, driver):
         self.driver = driver
 
-    def open_url(self, url:str):  # 打开url
+    def open_url(self, url: str):  # 打开url
         """
 
         Args:
@@ -57,8 +57,6 @@ class BasePage(object):
         except Exception as e:
             raise e
 
-
-
     def find_element(self, loc, timeout=10):  # 定位元素
         return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(loc))
 
@@ -68,7 +66,7 @@ class BasePage(object):
     def click(self, loc):  # 点击元素
         return self.find_element(loc).click()
 
-    def send_keys_(self, loc, text=None):  # 发送文本
+    def send_keys(self, loc, text=None):  # 发送文本
         return self.find_element(loc).send_keys(text)
 
     def get_title(self):
@@ -80,19 +78,22 @@ class BasePage(object):
     def size(self, wide, high):  # 设置浏览器大小
         return self.driver.set_window_size(wide, high)
 
+    def get_value(self, loc, attname: str = 'outerHTML'):
+        return self.find_element(loc).getAttribute(attname)
+
     '''鼠标事件相关封装'''
 
-    def right_click(self, path):  # 鼠标右击
-        return ActionChains(self.driver).context_click(path).perform()
+    def right_click(self, ele):  # 鼠标右击
+        return ActionChains(self.driver).context_click(ele).perform()
 
-    def double_click(self, path):  # 双击
-        return ActionChains(self.driver).double_click(path).perform()
+    def double_click(self, ele):  # 双击
+        return ActionChains(self.driver).double_click(ele).perform()
 
-    def drag_and_drop(self, start_path, end_path):  # 鼠标拖放（start_path=鼠标拖动源元素， end_path=鼠标释放目标元素）
-        return ActionChains(self.driver).drag_and_drop(start_path, end_path).perform()
+    def drag_and_drop(self, start_ele, end_ele):  # 鼠标拖放（start_path=鼠标拖动源元素， end_path=鼠标释放目标元素）
+        return ActionChains(self.driver).drag_and_drop(start_ele, end_ele).perform()
 
-    def move_to_element(self, path):  # 鼠标悬停
-        return ActionChains(self.driver).move_to_element(path).perform()
+    def move_to_element(self, ele):  # 鼠标悬停
+        return ActionChains(self.driver).move_to_element(ele).perform()
 
     '''其他操作封装'''
 
@@ -110,4 +111,3 @@ class BasePage(object):
 
     def max_window(self):  # 最大化浏览器
         return self.driver.maximizi_window()
-
