@@ -22,10 +22,10 @@ def open_browser(browser: str = 'chrome', **kwargs):
         driver = webdriver.Ie(**kwargs)
     elif browser.lower() == "edge":
         driver = webdriver.Edge(**kwargs)
-    elif browser.lower() == "phantomjs":
-        driver = webdriver.PhantomJS(**kwargs)
+    elif browser.lower() == "safari":
+        driver = webdriver.Safari(**kwargs)
     else:
-        raise Exception("Unsupported browser")
+        raise Exception("未知的浏览器或未封装的浏览器")
     return driver
 
 
@@ -49,11 +49,10 @@ class BasePage(object):
         try:
             if url.startswith("http://") or url.startswith("https://"):
                 self.driver.get(url)
-                self.driver.maximizi_window()
+                self.driver.maximize_window()
             else:
                 self.driver.get("http://" + url)
-                self.driver.maximizi_window()
-                self.driver.maximizi_window()
+                self.driver.maximize_window()
         except Exception as e:
             raise e
 
@@ -110,4 +109,4 @@ class BasePage(object):
         return self.driver.page_source()
 
     def max_window(self):  # 最大化浏览器
-        return self.driver.maximizi_window()
+        return self.driver.maximize_window()
