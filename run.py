@@ -1,7 +1,7 @@
 import unittest
 from HTMLTestRunner.HTMLTestRunner import HTMLTestRunner
 import os
-from TestCase.test import TestBaidu
+from TestCase.test_web import TestBaidu
 import time
 import smtplib  # 邮件库
 from email.mime.text import MIMEText
@@ -19,7 +19,7 @@ report_path = os.path.join(current_path, 'Report')  # 结果报告存放路径
 """
     加载用例的方式一
     def run_all_case():
-    discover = unittest.defaultTestLoader.discover(case_path, pattern='test.py')
+    discover = unittest.defaultTestLoader.discover(case_path, pattern='test_web.py')
     return discover
 """
 """
