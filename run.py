@@ -1,7 +1,7 @@
 import unittest
 from HTMLTestRunner.HTMLTestRunner import HTMLTestRunner
 import os
-from TestCase.test_web import TestBaidu
+from testcase.test_web import TestBaidu
 import time
 import smtplib  # 邮件库
 from email.mime.text import MIMEText

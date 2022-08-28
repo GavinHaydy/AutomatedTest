@@ -1,7 +1,7 @@
 import unittest
 from time import sleep
-from Page.Home.baidu import BaiduPage
-from Common.base import open_browser
+from page.Home.baidu import BaiduPage
+from common.base import open_browser
 
 class TestBaidu(unittest.TestCase):
 
