@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 
 def open_browser(browser: str = 'chrome', **kwargs):
@@ -17,7 +18,23 @@ def open_browser(browser: str = 'chrome', **kwargs):
     if browser.lower() == "firefox":
         driver = webdriver.Firefox(**kwargs)
     elif browser.lower() == "chrome":
-        driver = webdriver.Chrome(**kwargs)
+        if kwargs.get('logs') == True:
+            caps = DesiredCapabilities.CHROME
+            caps['loggingPrefs'] = {
+                'browser': 'ALL',
+                'performance': 'ALL'
+            }
+            caps['perfLoggingPrefs'] = {
+                'enableNetwork': True,
+                'enablePage': False,
+                'enableTimeline': False
+            }
+            option = webdriver.ChromeOptions()
+            option.add_argument('--no-sandbox')
+            option.add_experimental_option('w3c', True)
+            driver = webdriver.Chrome(desired_capabilities=caps, options=option)
+        else:
+            driver = webdriver.Chrome(**kwargs)
     elif browser.lower() == "ie":
         driver = webdriver.Ie(**kwargs)
     elif browser.lower() == "edge":
