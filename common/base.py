@@ -3,9 +3,10 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+from selenium.webdriver.support.relative_locator import locate_with, with_tag_name, RelativeBy
 
 
-def open_browser(browser: str = 'chrome', **kwargs):
+def open_browser(browser: str = 'chrome', kwargs: dict = None):
     """
 
     Args:
@@ -74,10 +75,17 @@ class BasePage(object):
             raise e
 
     def find_element(self, loc, timeout=10):  # 定位元素
-        return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(loc))
+        #   根据loc类型处理
+        if isinstance(loc, RelativeBy):
+            return self.driver.find_element(loc)
+        else:
+            return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(loc))
 
     def find_elements(self, loc, timeout=10):  # 定位一组元素
-        return WebDriverWait(self.driver, timeout).until(EC.presence_of_all_elements_located(loc))
+        if isinstance(loc, RelativeBy):
+            return self.driver.find_elements(loc)
+        else:
+            return WebDriverWait(self.driver, timeout).until(EC.presence_of_all_elements_located(loc))
 
     def click(self, loc):  # 点击元素
         return self.find_element(loc).click()
@@ -96,6 +104,27 @@ class BasePage(object):
 
     def get_value(self, loc, attname: str = 'outerHTML'):
         return self.find_element(loc).getAttribute(attname)
+
+    def locate_with(self, loc):
+        return locate_with(loc[0], loc[1])
+
+    def locate_with_above(self, loc, el):
+        return locate_with(loc[0], loc[1]).above(el)
+
+    def locate_with_below(self, loc, el):
+        return locate_with(loc[0], loc[1]).below(el)
+
+    def locate_with_left(self, loc, el):
+        return locate_with(loc[0], loc[1]).below(el)
+
+    def locate_with_right(self, loc, el):
+        return locate_with(loc[0], loc[1]).below(el)
+
+    def locate_with_near(self, loc, el):
+        return locate_with(loc[0], loc[1]).near(el)
+
+    def quit(self):
+        return self.driver.quit()
 
     '''鼠标事件相关封装'''
 
