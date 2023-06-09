@@ -1,12 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support.relative_locator import locate_with, with_tag_name, RelativeBy
 
 
-def open_browser(browser: str = 'chrome', kwargs: dict = None):
+def open_browser(browser: str = 'chrome', **kwargs):
     """
 
     Args:
@@ -19,7 +19,7 @@ def open_browser(browser: str = 'chrome', kwargs: dict = None):
     if browser.lower() == "firefox":
         driver = webdriver.Firefox(**kwargs)
     elif browser.lower() == "chrome":
-        if kwargs.get('logs') == True:
+        if kwargs and kwargs.get('logs'):
             caps = DesiredCapabilities.CHROME
             caps['loggingPrefs'] = {
                 'browser': 'ALL',
@@ -79,13 +79,13 @@ class BasePage(object):
         if isinstance(loc, RelativeBy):
             return self.driver.find_element(loc)
         else:
-            return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(loc))
+            return WebDriverWait(self.driver, timeout).until(ec.presence_of_element_located(loc))
 
     def find_elements(self, loc, timeout=10):  # 定位一组元素
         if isinstance(loc, RelativeBy):
             return self.driver.find_elements(loc)
         else:
-            return WebDriverWait(self.driver, timeout).until(EC.presence_of_all_elements_located(loc))
+            return WebDriverWait(self.driver, timeout).until(ec.presence_of_all_elements_located(loc))
 
     def click(self, loc):  # 点击元素
         return self.find_element(loc).click()
@@ -97,31 +97,54 @@ class BasePage(object):
         return self.driver.title
 
     def get_text(self, loc):
+        """
+
+        Args:
+            loc:
+
+        Returns: the text of tag
+
+        """
         return self.find_element(loc).text
 
     def size(self, wide, high):  # 设置浏览器大小
         return self.driver.set_window_size(wide, high)
 
-    def get_value(self, loc, attname: str = 'outerHTML'):
+    def maxsize(self):
+        return self.driver.set_window_size()
+
+    def minsize(self):
+        return self.driver.minimize_window()
+
+    def tag_value(self, loc, attname: str = 'outerHTML'):
         return self.find_element(loc).getAttribute(attname)
 
-    def locate_with(self, loc):
-        return locate_with(loc[0], loc[1])
+    """相对定位 Relative positioning"""
 
-    def locate_with_above(self, loc, el):
-        return locate_with(loc[0], loc[1]).above(el)
+    @staticmethod
+    def tag_name_with(tag_name: str):
+        return with_tag_name(tag_name)
 
-    def locate_with_below(self, loc, el):
-        return locate_with(loc[0], loc[1]).below(el)
+    def locate_with_above(self, el, *loc):
+        return locate_with(*loc).above(self.find_element(el))
 
-    def locate_with_left(self, loc, el):
-        return locate_with(loc[0], loc[1]).below(el)
+    def locate_with_below(self, el, *loc):
+        return locate_with(*loc).below(self.find_element(el))
 
-    def locate_with_right(self, loc, el):
-        return locate_with(loc[0], loc[1]).below(el)
+    # @staticmethod
+    def locate_with_left(self, el, *loc):
+        # print(*loc)
+        return locate_with(*loc).to_left_of(self.find_element(el))
 
-    def locate_with_near(self, loc, el):
-        return locate_with(loc[0], loc[1]).near(el)
+    # @staticmethod
+    def locate_with_right(self, el, *loc):
+        return locate_with(*loc).to_right_of(self.find_element(el))
+
+    def locate_with_near(self, el, *loc):
+        return locate_with(*loc).near(self.find_element(el))
+
+    def close(self):
+        return self.driver.close()
 
     def quit(self):
         return self.driver.quit()
@@ -145,8 +168,22 @@ class BasePage(object):
     def get_picture(self, file_save_path):  # 截图并保存在指定位置
         return self.driver.get_screenshot_as_file(file_save_path)
 
-    def use_js(self, js_code):  # 运行js代码
-        return self.driver.execute_script(js_code)
+    def execute_js(self, js_code: str, *args, is_async='n'):
+        """
+        Executes JavaScript in the current window/frame.
+
+        Args:
+            js_code:  code of JavaScript
+            *args:
+            is_async: y|n  Asynchronously executed or not
+
+        Returns:
+
+        """
+        if is_async.lower() == 'n':
+            return self.driver.execute_script(js_code, *args)
+        elif is_async.lower() == 'y':
+            return self.driver.execute_async_script(js_code, *args)
 
     def get_url(self):  # 获取当前url
         return self.driver.current_url()
@@ -156,3 +193,9 @@ class BasePage(object):
 
     def max_window(self):  # 最大化浏览器
         return self.driver.maximize_window()
+
+    def get_handle(self):
+        return self.driver.current_window_handle()
+
+    def get_handles(self):
+        return self.driver.window_handle()
