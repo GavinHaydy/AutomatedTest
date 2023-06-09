@@ -10,9 +10,15 @@ import pandas
 import json
 import numpy
 
+from common.get_keyword import GetKeyword
 
-def read_yaml(filepath):
+
+def _read_yaml(filepath):
     return yaml.load(open(filepath, 'r').read(), yaml.FullLoader)
+
+
+def get_yaml(yaml_path, keyword):
+    return GetKeyword().get_keyword(_read_yaml(yaml_path), keyword)
 
 
 class NpEncoder(json.JSONEncoder):
